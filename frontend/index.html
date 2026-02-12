@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cloud Security Dashboard</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🔒 AWS Cloud Security Dashboard</h1>
+                <div class="header-info">
+                    <span class="last-updated">Last updated: <span id="lastUpdated">--:--</span></span>
+                    <button class="btn-refresh" onclick="refreshDashboard()">🔄 Refresh</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- KPI Cards Section -->
+            <section class="kpi-section">
+                <h2>Security Overview</h2>
+                <div class="kpi-cards">
+                    <!-- Overall Security Score -->
+                    <div class="kpi-card kpi-overall">
+                        <div class="kpi-icon">🛡️</div>
+                        <div class="kpi-content">
+                            <h3>Overall Security Score</h3>
+                            <div class="score-display">
+                                <span class="score-value" id="overallScore">--</span>
+                                <span class="score-max">/100</span>
+                            </div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="overallScoreFill"></div>
+                            </div>
+                            <p class="risk-level" id="overallRiskLevel">--</p>
+                        </div>
+                    </div>
+
+                    <!-- EC2 Security -->
+                    <div class="kpi-card kpi-ec2">
+                        <div class="kpi-icon">💻</div>
+                        <div class="kpi-content">
+                            <h3>EC2 Instances</h3>
+                            <div class="score-display">
+                                <span class="score-value" id="ec2Score">--</span>
+                                <span class="score-max">/100</span>
+                            </div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="ec2ScoreFill"></div>
+                            </div>
+                            <p class="instance-count" id="ec2Count">0 instances</p>
+                        </div>
+                    </div>
+
+                    <!-- S3 Security -->
+                    <div class="kpi-card kpi-s3">
+                        <div class="kpi-icon">🪣</div>
+                        <div class="kpi-content">
+                            <h3>S3 Buckets</h3>
+                            <div class="score-display">
+                                <span class="score-value" id="s3Score">--</span>
+                                <span class="score-max">/100</span>
+                            </div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="s3ScoreFill"></div>
+                            </div>
+                            <p class="bucket-count" id="s3Count">0 buckets</p>
+                        </div>
+                    </div>
+
+                    <!-- Critical Issues -->
+                    <div class="kpi-card kpi-issues">
+                        <div class="kpi-icon">⚠️</div>
+                        <div class="kpi-content">
+                            <h3>Critical Issues</h3>
+                            <div class="score-display">
+                                <span class="score-value" id="criticalCount">0</span>
+                            </div>
+                            <p class="issues-subtitle">Require immediate attention</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <h2>Detailed Analysis</h2>
+                <div class="charts-grid">
+                    <!-- EC2 Security Breakdown -->
+                    <div class="chart-card">
+                        <h3>EC2 Security Breakdown</h3>
+                        <canvas id="ec2BreakdownChart" height="300"></canvas>
+                    </div>
+
+                    <!-- S3 Security Breakdown -->
+                    <div class="chart-card">
+                        <h3>S3 Security Breakdown</h3>
+                        <canvas id="s3BreakdownChart" height="300"></canvas>
+                    </div>
+
+                    <!-- Security Score Distribution -->
+                    <div class="chart-card full-width">
+                        <h3>Resources by Risk Level</h3>
+                        <canvas id="riskDistributionChart" height="150"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations Section -->
+            <section class="recommendations-section">
+                <h2>🎯 Security Recommendations</h2>
+                <div class="recommendations-container" id="recommendationsContainer">
+                    <div class="loading">Loading recommendations...</div>
+                </div>
+            </section>
+
+            <!-- Recent Assessments Section -->
+            <section class="assessments-section">
+                <h2>Recent Assessments</h2>
+                <div class="assessments-tabs">
+                    <button class="tab-btn active" onclick="switchTab('ec2-assessments')">
+                        💻 EC2 Instances
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('s3-assessments')">
+                        🪣 S3 Buckets
+                    </button>
+                </div>
+
+                <!-- EC2 Assessments -->
+                <div id="ec2-assessments" class="assessment-tab active">
+                    <div class="assessment-list" id="ec2AssessmentList">
+                        <div class="loading">Loading EC2 assessments...</div>
+                    </div>
+                </div>
+
+                <!-- S3 Assessments -->
+                <div id="s3-assessments" class="assessment-tab">
+                    <div class="assessment-list" id="s3AssessmentList">
+                        <div class="loading">Loading S3 assessments...</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 AWS Cloud Security Dashboard | Real-time Security Monitoring</p>
+        </footer>
+    </div>
+
+    <script src="static/js/api-client.js"></script>
+    <script src="static/js/dashboard.js"></script>
+</body>
+</html>
